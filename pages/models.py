@@ -59,7 +59,13 @@ class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, verbose_name="Категория", null=True)
 
     def get_absolute_url(self):
-        return reverse("product_detail", kwargs={'slug': self.slug})
+        return reverse("product_detail", kwargs={"slug": self.slug})
+
+    def get_first_photo(self):
+        photo = self.productimage_set.all().first()
+        if photo is not None:
+            return photo.photo.url
+        return "https://images.satu.kz/126101314_w640_h640_razdel-v-razrabotketovary.jpg"
 
     def save(self, *args, **kwargs):
         if not self.slug:
