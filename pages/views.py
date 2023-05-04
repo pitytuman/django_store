@@ -36,7 +36,10 @@ def subcategory_articles_view(request, slug):
 
 def product_detail_view(request, slug):
     product = Product.objects.get(slug=slug)
+    related_products = Product.objects.filter(category=product.category).order_by("?")
+    related_products = [item for item in related_products if item.pk != product.pk]
     context = {
-        "product": product
+        "product_detail": product,
+        "related_products": related_products[:4]
     }
     return render(request, "pages/product_detail.html", context)
