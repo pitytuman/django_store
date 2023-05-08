@@ -11,3 +11,8 @@ def get_categories_data():
     categories = Category.objects.all()
     data = {category:category.subcategory_set.all() for category in categories}
     return data
+
+
+@register.filter()
+def rating_range(value=0):
+    return range(val)
